@@ -1,13 +1,8 @@
-// --------------------------------
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
-let galleryItemsEL = galleryItems;
 
-// console.log(galleryItemsEL);
 const list = document.querySelector('.gallery');
-// console.log(list);
 
-const markup = galleryItemsEL.reduce(
+const markup = galleryItems.reduce(
   (acc, { original, preview, description }) =>
     acc +
     `<div class="gallery__item">
@@ -19,7 +14,6 @@ const markup = galleryItemsEL.reduce(
 );
 
 list.insertAdjacentHTML('afterbegin', markup);
-// ---------------------------------------------------------------------------------------
 
 list.addEventListener('click', clickOnImg);
 
@@ -28,12 +22,6 @@ function clickOnImg(e) {
 
   if (!e.target.classList.contains('gallery__image')) return; // if (e.target === e.currentTarget) return // те саме тільки 'старе'
   const action = e.target.dataset.source;
-  // console.log(e.currentTarget);
-  // console.log(e.target);
-  // console.log(e.target.nodeName);
-  // console.log(e.target.dataset.source);
-  // console.log(e.target.alt);
-  // console.log(e.target.src);
 
   const instance = basicLightbox.create(
     `<img class="gallery__image" src="${action}">`
@@ -41,9 +29,57 @@ function clickOnImg(e) {
 
   instance.show();
 
-
+  list.addEventListener('keydown', e => {
+    if (e.code === 'Escape') instance.close();
+  });
 }
 
+// =========================================================================================
+// import { galleryItems } from './gallery-items.js';
+
+// // console.log(galleryItems);
+// const list = document.querySelector('.gallery');
+// // console.log(list);
+
+// const markup = galleryItems.reduce(
+//   (acc, { original, preview, description }) =>
+//     acc +
+//     `<div class="gallery__item">
+//     <a class="gallery__link" href="${original}">
+//       <img class="gallery__image" src="${preview}" data-source="${original}" alt="${description}" />
+//     </a>
+//   </div>`,
+//   ''
+// );
+
+// list.insertAdjacentHTML('afterbegin', markup);
+// // ---------------------------------------------------------------------------------------
+
+// list.addEventListener('click', clickOnImg);
+
+// function clickOnImg(e) {
+//   e.preventDefault();
+
+//   if (!e.target.classList.contains('gallery__image')) return; // if (e.target === e.currentTarget) return // те саме тільки 'старе'
+//   const action = e.target.dataset.source;
+//   // console.log(e.currentTarget);
+//   // console.log(e.target);
+//   // console.log(e.target.nodeName);
+//   // console.log(e.target.dataset.source);
+//   // console.log(e.target.alt);
+//   // console.log(e.target.src);
+
+//   const instance = basicLightbox.create(
+//     `<img class="gallery__image" src="${action}">`
+//   );
+
+//   instance.show();
+
+//   list.addEventListener('keydown', e => {
+//     if (e.code === 'Escape') instance.close();
+//   });
+// }
+// =========================================================================================
 // -------------------------------------
 // import { galleryItems } from './gallery-items.js';
 // // Change code below this line
