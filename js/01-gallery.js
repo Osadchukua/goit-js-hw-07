@@ -20,20 +20,32 @@ list.addEventListener('click', clickOnImg);
 function clickOnImg(e) {
   e.preventDefault();
 
-  if (!e.target.classList.contains('gallery__image')) return; // if (e.target === e.currentTarget) return // те саме тільки 'старе'
+  if (!e.target.classList.contains('gallery__image')) return;
+
   const action = e.target.dataset.source;
 
-  const instance = basicLightbox.create(
-    `<img class="gallery__image" src="${action}">`
-  );
+  const options = {
+    onShow: () => {
+      window.addEventListener('keydown', keyClose), console.log('onListner');
+    },
+    onClose: () => {
+      window.removeEventListener('keydown', keyClose),
+        console.log('offListner');
+    },
+  };
+
+  const instance = basicLightbox.create(`<img src = "${action}">`, options);
 
   instance.show();
 
-  list.addEventListener('keydown', e => {
-    if (e.code === 'Escape') instance.close();
-  });
+  function keyClose(e) {
+    if (e.code === 'Escape') {
+      instance.close();
+      console.log(e.code);
+    }
+  }
 }
-
+  
 // =========================================================================================
 // import { galleryItems } from './gallery-items.js';
 
